@@ -4,9 +4,11 @@ title: Best practices for preparing training data
 
 The accuracy and consistency of your chatbot depends on a number of factors:
 
-    - Quality of your training data
-    - Large language model (LLM) selection
-    - Explicitness of base prompt
+* Quality of your training data
+
+* Large language model (LLM) selection
+
+* Explicitness of base prompt
 
 LLMs, like all statistics-based models, require training data during their construction. As they often say in the AI research community, “your model is only as good as your training data”.
 The best way to dictate and optimize your chatbot’s performance is to clean up its training data. In the following section, we provide some best practices for structuring your training data.
@@ -22,7 +24,7 @@ This means that even if your original document has a long chapter of text that t
 
 So how can we divide up the document with minimal alterations to its original meaning?
 
-Unfortunately there is no universal solution. This is still an ongoing field of scientific research. GPT-trainer uses a combination of rule-based and statistical
+Unfortunately there is no universal solution. This is still an ongoing field of scientific research. DONNAJAMES Easy uses a combination of rule-based and statistical
 relevance algorithms to divide training data into chunks, but we cannot always guarantee each chunk is self-contained, clean, and accurate. Fortunately, LLMs
 specialize in working with unstructured text, and they have high tolerances for badly formatted input when producing responses.
 
@@ -33,21 +35,7 @@ correct. If document structure is important, each chunk should also have relevan
 none of this can be guaranteed when chunks are initially extracted from uploaded text.
 
 This error is especially pronounced when working with websites. Since web browsers render websites very differently from how web scraper sees them, what
-you see can be very different from what our scraper captures. Furthermore, most layout information and data residing in images / illustrations / videos are lost during the scraping process.
-
-<Frame>
-  <img src="/images/best-practices-1.png" />
-</Frame>
-
-_GPT-trainer’s own pricing table on https://gpt-trainer.com/pricing as rendered via the Chrome browser._
-
-<Frame>
-  <img src="/images/best-practices-2.png" />
-</Frame>
-
-_The same website content, after our scraper captures it and associated chunking has been done._
-
-## No gaps, no overlaps
+you see can be very different from what our scraper captures. Furthermore, most layout information and data residing in images / illustrations / videos are lost during the scraping process.No gaps, no overlaps
 
 RAG relies on dynamically fetching a subset of reference data from the entire collection of training materials.
 To identify which chunks contain the most relevant information, the user query goes through the same embedding process
@@ -60,15 +48,11 @@ containing semantically similar, but factually inconsistent information are simu
 
 For example, if the user asks:
 
-**_What is the price of iPhone SE?_**
+***What is the price of iPhone SE?***
 
 then, the algorithm may pull the following chunks to serve as reference context:
 
-    > [Chunk 1] iPhone SE’s current price is $250.
-    >
-    > [Chunk 2] Original iPhone SE is $199.
-    >
-    > [Chunk 3] iPhone 5’s price is $600.
+> \[Chunk 1] iPhone SE’s current price is $250.\[Chunk 2] Original iPhone SE is $199.\[Chunk 3] iPhone 5’s price is $600.
 
 As you can see, these chunks all explicitly mention the price of iPhone SE, so they are semantically similar to the user’s original query.
 However, they contain factually inconsistent information. When this happens, you may notice the AI generating different responses each
