@@ -1,0 +1,143 @@
+---
+title: Multi-Agents Chatbot
+---
+
+GPT-trainer is the first and most powerful LLM-native conversational AI platform that
+implements a multi-agent architecture. Multiple AI Agents work together in a coordinated orchestration
+to enable you to create solutions with unprecedented versatility, speed, and automation.
+
+We present this guide to help you understand how our Agents work together, as well as share
+with you some best practices surrounding multi-agent chatbot design.
+
+GPT-trainer has 2 types of Agents:
+
+    - **User-facing:** Agent directly interacts with users conversationally in a Q&A fashion.
+    Only a single user-facing Agent engages with the user when a new query is input into the chatbot.
+
+    - **Background:** Agent never interacts with users directly and instead monitors the conversation
+    in an ongoing fashion. All background Agents are run whenever the user submits a new query to the chatbot.
+
+<Frame>
+  <img src="/images/multi-agents-chatbot-1.png" />
+</Frame>
+
+All Agents have two states:
+
+    - **Active:** Agent is “Connected”. It is live and running.
+    - **Inactive:** Agent is “Disabled”. It does not do anything.
+
+Since only a single user-facing Agent engages with the user at any given time, our system
+must choose the best user-facing Agent based on their respective specializations. To do this,
+we have our own AI Supervisor working in the background to conduct **intent classification**.
+
+<Note>
+  Agents are completely isolated from one another. This means that you cannot
+  direct the behavior, bias, or selection priority of one Agent from inside
+  another Agent.
+</Note>
+
+Since the only reliable source of information our AI Supervisor has when determining which Agent
+is best suited to perform which tasks is the “Agent Description”, it is **absolutely crucial** that you provide
+an explicit and clear description for **every User Facing Agent**.
+
+<Frame>
+  <img src="/images/multi-agents-chatbot-2.png" />
+</Frame>
+
+Good Agent descriptions should answer the question **“What type of queries should the Agent handle?”**
+More specifically, Agent descriptions should encompass all relevant “user intents” that it is supposed to handle.
+Here are some examples of good Agent descriptions:
+
+<AccordionGroup>
+  <Accordion title="GPT-trainer Assistant">
+    Embody the role of "GPT-trainer Expert," a specialized guide for GPT-trainer. Your main objective is to assist users with answering GPT-trainer-related questions related to:
+    - Use cases
+    - Features and capabilities
+    - Data security
+    - Pricing
+    - AI Agents and multi-Agent architecture
+    - User identity verification
+    - Chunk curation
+    - Function calling
+    - Partnership program
+    - Custom domains
+    - Tokens
+
+    All intents handled by this Agent should be related to GPT-trainer.
+
+  </Accordion>
+
+{" "}
+<Accordion title="Lead Collection">
+  The Lead Collection agent specializes in requesting personal and contact
+  information from users.
+</Accordion>
+
+{" "}
+<Accordion title="Returns">
+  Returns agent is used to handle merchandise returns requests and related
+  administrative or logistics inquiries.
+</Accordion>
+
+{" "}
+<Accordion title="Fruits Q&A">
+  The Fruits Q&A handles questions specifically about fruits.
+</Accordion>
+
+  <Accordion title="Unrelated Query Defender">
+    The Unrelated Query Defender Agent handles any user queries not related to GPT-trainer. This includes requests for:
+    - writing assistance
+    - artistic expressions
+    - homework help
+    - professional advice
+    - making selections
+
+  </Accordion>
+
+</AccordionGroup>
+
+Agent descriptions **should not** include details about “how the Agent performs its job”.
+That part should be reserved for the Agent’s base prompt. Text such as “Agent provides informed
+answers based on knowledge from the source library.” is not needed and can be distracting to the AI Supervisor.
+
+So what makes for a good multi-agent chatbot design? How can I ensure that all my intended user intents are handled by the appropriate Agent?
+
+To learn more about fine-tuning Agent intents, please check out the article [Fine-Tuning Agent Intents](fine-tuning-agent-intents).
+
+In our AI Supervisor routing design, we use an algorithm that balances latency, consistency,
+and comprehensiveness. It will not always give you 100% accuracy,
+but you can get pretty close if you design your chatbots effectively.
+
+## Debugging the chatbot
+
+If you notice that the chatbot is not responding to your expectations, then there may be two causes.
+
+1. The wrong Agent may have been assigned to handle the incoming user query.
+2. The Agent itself may not be optimally configured.
+
+To find out whether your intended Agent has been selected to handle the user’s query, go to “Inbox” and turn on debug mode.
+
+<Frame>
+  <img src="/images/multi-agents-chatbot-3.png" />
+</Frame>
+
+Under “Active Agent”, you will see the Agent that generated the response. Please note that you will only see “Active Agent” metadata
+if you have more than one active user-facing Agents.
+
+If the Agent that handled the user query was not the correct one, you can return to Agent configuration and update its name, description,
+or prompt.
+
+If the correct Agent handled the user query but the response was not what you expected, then the issue resides within the Agent itself.
+You will then need to update the Agent configuration. The most straightforward way to fix a response is by revising the AI’s answer directly:
+
+<Frame>
+  <img src="/images/multi-agents-chatbot-4.png" />
+</Frame>
+
+This ensures that the chatbot will generate an answer based on what you revised every time it encounters the question in the future, assuming
+the same Agent was chosen to respond to the query.
+
+If you’d like to make the Agent more robust and consistent in general, you can curate the training data, choose a more powerful LLM, or be more
+explicit in your base prompt. To learn some best practices for training the chatbot, see [best practices for preparing training data](/best-practices)
+
+**Happy building!**
