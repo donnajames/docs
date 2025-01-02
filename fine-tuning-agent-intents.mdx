@@ -4,11 +4,6 @@ title: Fine Tuning Agent Intents
 
 When your chatbot has multiple user-facing Agents, DONNAJAMES Easy AI Supervisor automatically assigns the most appropriate user-facing Agent to handle the user’s input queries. It does so by considering the most recent chat history to determine the user’s intent, then looks for the most suitable Agent by looking at each Agent’s name, description and prompt.
 
-In our article [Multi-Agent Chatbot](multi-agents-chatbot), we covered some best practices on
-Agent description writing and provided a number of examples. However, as comprehensive as the
-AI Supervisor tries to be, there will still be scenarios where Agent descriptions do not effectively
-cover all practical use case scenarios.
-
 When user-facing Agents are created or modified, we automatically generate a number of intents along with example user queries to serve as reference for the AI Supervisor. These intents can be reviewed, customized, or deleted through the AI Supervisor Settings interface. The AI Supervisor makes use of these intents directly when evaluating each Agent’s relevance in handling the user’s input query, so they are crucial to the core routing algorithm.
 
 To fine-tune Agent intents, go to AI Supervisor Settings -> Intents:
@@ -48,15 +43,11 @@ When designing a multi-agent setup, we recommend keeping to a “MECE” approac
 
 Ideally, you want the situation where:
 
-> **User-facing Agent A handles:**- intent class 1- intent class 2
->
-> - intent class 3
+> **User-facing Agent A handles:**- intent class 1- intent class 2- intent class 3
 >
 > - etc.
 
-> **User-facing Agent B handles:**- intent class 10- intent class 11
->
-> - intent class 12
+> **User-facing Agent B handles:**- intent class 10- intent class 11- intent class 12
 >
 > - etc.
 
