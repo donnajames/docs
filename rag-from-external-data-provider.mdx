@@ -2,21 +2,15 @@
 title: RAG from an External Data Provider
 ---
 
-Uploading static sources as training data for your AI Agents is well and good, but what if your database is huge, structured, externally-hosted,
-or updated in real-time? There is no way to dump the entire database into DONNAJAMES Easy static knowledge library and still maintain a live link…
+Uploading static sources as training data for your AI Agents is well and good, but what if your database is huge, structured, externally-hosted, or updated in real-time? There is no way to dump the entire database into DONNAJAMES Easy static knowledge library and still maintain a live link…
 
-This is where function-calling comes in. Through function-calling, you can serve data on-demand to your AI Agent in DONNAJAMES Easy during a live
-conversation session. To show you how, we walk you through an example of RAG enrichment using (abstracts of) academic papers sourced from a trusted
-academic papers aggregator: Semantic Scholar API.
+This is where function-calling comes in. Through function-calling, you can serve data on-demand to your AI Agent in DONNAJAMES Easy during a live conversation session. To show you how, we walk you through an example of RAG enrichment using (abstracts of) academic papers sourced from a trusted academic papers aggregator: Semantic Scholar API.
 
 ## Setting up and testing the function
 
-First, you’ll need an API key from your external data provider, whoever that may be, assuming they have a secure API. In our case, we requested one
-from [Semantic Scholar](https://www.semanticscholar.org/) directly.
+First, you’ll need an API key from your external data provider, whoever that may be, assuming they have a secure API. In our case, we requested one from [Semantic Scholar](https://www.semanticscholar.org/) directly.
 
-Since we want to enrich our LLM query response with relevant information from academic research, we need to find the appropriate API endpoint to
-conduct the search. Semantic Scholar offers nice [documentation](https://api.semanticscholar.org/api-docs/graph#tag/Paper-Data/operation/get_graph_paper_relevance_search)
-in that regard.
+Since we want to enrich our LLM query response with relevant information from academic research, we need to find the appropriate API endpoint to conduct the search. Semantic Scholar offers nice [documentation](https://api.semanticscholar.org/api-docs/graph#tag/Paper-Data/operation/get_graph_paper_relevance_search) in that regard.
 
 <Frame>
   <img src="/images/fc-external-database-api-1.png" />
@@ -122,14 +116,9 @@ The output we received looks like follows:
 … (truncated due to length)
 ```
 
-The Semantic Scholar function returned the top 20 matching results ranked by relevance based on our input parameter specification. As you see, the response
-can get quite long, so we truncated the output for conciseness.
+The Semantic Scholar function returned the top 20 matching results ranked by relevance based on our input parameter specification. As you see, the response can get quite long, so we truncated the output for conciseness.
 
-Ideally, you want a structured JSON response from the function’s output like what we showed above.
-
-We ran our own analysis for this particular API endpoint (with the specific set of output fields we requested) and found that on average, each returned
-result is between 400-500 tokens long. This means that depending on the token limit we reserved for the function output, we can only fit so many search results
-in before running out of space. Keep this in mind as you prioritize the information you wish to supply to the LLM during RAG.
+Ideally, you want a structured JSON response from the function’s output like what we showed above. We ran our own analysis for this particular API endpoint (with the specific set of output fields we requested) and found that on average, each returned result is between 400-500 tokens long. This means that depending on the token limit we reserved for the function output, we can only fit so many search results in before running out of space. Keep this in mind as you prioritize the information you wish to supply to the LLM during RAG.
 
 Now we know what the LLM would see as additional context provided by the function call, we can start linking it to our DONNAJAMES Easy Agent.
 
@@ -143,23 +132,17 @@ Now we know what the LLM would see as additional context provided by the functio
 In your chatbot inside DONNAJAMES Easy, you must first create an appropriate AI Agent that you plan to give this function-calling capability to. In our example,
 we created “The Professor”. We then defined an associated Agent description and base prompt.
 
-<Frame>
-  <img src="/images/fc-external-database-api-2.png" />
-</Frame>
+![](/Scherm­afbeelding2025-01-02om12.32.44.png)
 
 We picked the GPT-4-0125-8k Model for this example. You can see our simple prompt in the screenshot below.
 
-<Frame>
-  <img src="/images/fc-external-database-api-3.png" />
-</Frame>
+![](/Scherm­afbeelding2025-01-02om12.33.23.png)
 
 Next, we save the Agent and go to the “Knowledge” tab to disable static RAG from the chatbot’s own knowledge library. This is only necessary if you don’t want
 to use any training data from the static sources list. In our example, we didn’t upload any training data anyways, but we do this as standard practice to keep
 things clean.
 
-<Frame>
-  <img src="/images/fc-external-database-api-4.png" />
-</Frame>
+![](/Scherm­afbeelding2025-01-02om12.33.54.png)
 
 Save the Agent.
 
@@ -167,16 +150,12 @@ Save the Agent.
 
 Within your Agent, head over to the “Functions” tab. Change the “Response Context Limit” to the maximum allowed. Then click “Add function”.
 
-<Frame>
-  <img src="/images/fc-external-database-api-5.png" />
-</Frame>
+![](/Scherm­afbeelding2025-01-02om12.34.36.png)
 
 This is where you tell the LLM exactly what the function does and how it works. The LLM will then decide on its own whether it needs the function when responding
 to the user during a conversation, then call it with the appropriate parameters as needed.
 
-<Frame>
-  <img src="/images/fc-external-database-api-6.png" />
-</Frame>
+![](/Scherm­afbeelding2025-01-02om12.35.08.png)
 
 The function name and description are particularly useful in helping the AI understand what the function does. Please make sure to be as explicit as possible in
 your own definition. The function description must be less than 1024 characters, including spaces. In our case, we wrote the following:
@@ -234,9 +213,7 @@ In general, secure public-facing APIs require authentication. Semantic Scholar i
 to supply your authentication token will differ based on the particular API you use, so please make sure to be informed on your API provider’s documentation.
 For our example, the key field is named “x-api-key”:
 
-<Frame>
-  <img src="/images/fc-external-database-api-7.png" />
-</Frame>
+![](/Scherm­afbeelding2025-01-02om12.35.51.png)
 
 ## Variable parameters
 
