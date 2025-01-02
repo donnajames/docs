@@ -2,18 +2,19 @@
 title: Uploading Data Sources
 ---
 
-In this guide, we will walk through the process of uploading data sources to your chatbot using the GPT-trainer API.
+In this guide, we will walk through the process of uploading data sources to your chatbot using the API.
 
 ## Prerequisites
 
 Before you begin, make sure you have the following:
 
-- An API key for accessing the GPT-trainer API.
-- A development environment or tool for making HTTP requests, such as Curl or a programming language like Python.
+* An API key for accessing the API.
+
+* A development environment or tool for making HTTP requests, such as Curl or a programming language like Python.
 
 ## API Endpoint
 
-The API endpoint for uploading data sources to your chatbot is: `https://app.gpt-trainer.com/api/v1/chatbot/{uuid}/data-source/url`.
+The API endpoint for uploading data sources to your chatbot is: `https://donnajames.app/api/v1/chatbot/{uuid}/data-source/url`.
 
 <Warning>Make sure to replace `{uuid}` with the UUID of your chatbot..</Warning>
 
@@ -27,79 +28,77 @@ To upload a data source, you need to send a POST request to the API endpoint wit
 }
 ```
 
-- url (string, required): Provide the URL of the data source you want to upload.
+* url (string, required): Provide the URL of the data source you want to upload.
 
 ## Example Request
 
-Here're example command sto create a chatbot using the GPT-trainer API:
+Here're example command sto create a chatbot using the API:
 
 <Warning>Replace **token** with your actual API key.</Warning>
 
 <CodeGroup>
+  ```bash Curl
+  curl --location --request POST 'https://donnajames.app/api/v1/chatbot/{uuid}/data-source/url' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer <token>' \
+  --data-raw '{
+    "url": "string"
+  }'
+  ```
 
-```bash Curl
-curl --location --request POST 'https://app.gpt-trainer.com/api/v1/chatbot/{uuid}/data-source/url' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer <token>' \
---data-raw '{
-  "url": "string"
-}'
-```
+  ```py Python
+  import requests
 
-```py Python
-import requests
+  url = 'https://app.gpt-trainer.com/api/v1/chatbot/{uuid}/data-source/url'
+  headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer <token>'
+  }
 
-url = 'https://app.gpt-trainer.com/api/v1/chatbot/{uuid}/data-source/url'
-headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer <token>'
-}
+  params = {
+      'uuid': '<chatbot-uuid>'
+  }
 
-params = {
-    'uuid': '<chatbot-uuid>'
-}
+  data = {
+      "url": "string",
+  }
 
-data = {
-    "url": "string",
-}
+  response = requests.post(url, headers=headers, params=params, json=data)
 
-response = requests.post(url, headers=headers, params=params, json=data)
+  if response.status_code == 200:
+      print("Request successful!")
+      print(response.json())
+  else:
+      print("Request failed with status code:", response.status_code)
+      print(response.text)
+  ```
 
-if response.status_code == 200:
-    print("Request successful!")
-    print(response.json())
-else:
-    print("Request failed with status code:", response.status_code)
-    print(response.text)
-```
+  ```ts JavaScript
+  const axios = require('axios');
 
-```ts JavaScript
-const axios = require('axios');
+  const url = 'https://app.gpt-trainer.com/api/v1/chatbot/{uuid}/data-source/url';
+  const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer <token>'
+  };
 
-const url = 'https://app.gpt-trainer.com/api/v1/chatbot/{uuid}/data-source/url';
-const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer <token>'
-};
+  const params = {
+      uuid: '<chatbot-uuid>'
+  };
 
-const params = {
-    uuid: '<chatbot-uuid>'
-};
+  const data = {
+      "url": "string",
+  };
 
-const data = {
-    "url": "string",
-};
-
-axios.post(url, data, { headers, params })
-    .then(response => {
-        console.log('Request successful!');
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.error('Request failed:', error);
-    });
-```
-
+  axios.post(url, data, { headers, params })
+      .then(response => {
+          console.log('Request successful!');
+          console.log(response.data);
+      })
+      .catch(error => {
+          console.error('Request failed:', error);
+      });
+  ```
 </CodeGroup>
 
-That's it! You've now learned how to upload data sources to your chatbot using the GPT-trainer API.
+That's it! You've now learned how to upload data sources to your chatbot using the API.

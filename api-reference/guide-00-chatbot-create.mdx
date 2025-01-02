@@ -55,7 +55,7 @@ Here're example command sto create a chatbot using the DONNAJAMES. Easy API:
 
 <CodeGroup>
   ```bash Curl
-  curl --location --request POST 'https://d/api/v1/chatbot/create' \
+  curl --location --request POST 'https://donnajames.app/api/v1/chatbot/create' \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Bearer <token>' \
   --data-raw '{
@@ -146,7 +146,7 @@ Here're example command sto create a chatbot using the DONNAJAMES. Easy API:
 }
 ```
 
-That's it! You've now learned how to create your own chatbot using the GPT-trainer API.
+That's it! You've now learned how to create your own chatbot using the DONNAJAMES. Easy API.
 Chatbot's `uuid` will be used in following guides.
 
 <Note>
@@ -162,7 +162,7 @@ Chatbot's `uuid` will be used in following guides.
 Use the following API endpoint to get the list of agents for a chatbot:
 
 ```
-https://app.gpt-trainer.com/api/v1/chatbot/{chatbot_uuid}/agents
+https://donnajames.app/api/v1/chatbot/{chatbot_uuid}/agents
 ```
 
 #### Example Response
@@ -196,7 +196,7 @@ After chatbot creation, a default General QA AI agent is like the one shown in t
 After getting the list of agents, you can update the agent by sending a POST request to the following API endpoint:
 
 ```
-https://app.gpt-trainer.com/api/v1/agent/{uuid}/update
+https://donnajames.app/api/v1/agent/{uuid}/update
 ```
 
 Please refer to [Update Agent API reference](/api-reference/agents/update) and the [Agent Properties Reference](/api-reference/agents/properties-reference) for detailed information on updating agent's properties.
@@ -207,7 +207,7 @@ Please refer to [Update Agent API reference](/api-reference/agents/update) and t
 
 <CodeGroup>
   ```bash Curl
-  curl --location --request POST 'https://app.gpt-trainer.com/api/v1/agent/{uuid}/update' \
+  curl --location --request POST 'https://donnajames.app/api/v1/agent/{uuid}/update' \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Bearer <token>' \
   --data-raw '{
